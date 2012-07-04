@@ -1,0 +1,159 @@
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tiny Multiplayer Online Role Playing Game - goffmog's LD23 entry</title>
+        <link rel="stylesheet" href="./css/humanity/jquery-ui-1.8.11.custom.css">
+        <script language="javascript" src="http://node.goffmog.com:666/socket.io/socket.io.js"></script>
+        <script language="javascript" src="./js/jquery-1.5.1.min.js"></script>
+        <script language="javascript" src="./js/jquery-ui-1.8.11.custom.min.js"></script>
+
+        <script language="javascript" src="js/json2.js"></script>
+        <script language="javascript" src="js/tileworld.js"></script>
+        <script language="javascript" src="js/nodeclient.js"></script>
+        <script language="javascript" src="js/gameclient.js"></script>
+
+        <script language="javascript">
+            function loadscript(){
+
+                if(!tMCow.client.connect()){
+                    alert("Oh noes :( The server is down. Send complaints to goffmog");
+                    return 0;
+                }else{
+                    document.getElementById('canvy').style.visibility='visible';
+                    document.getElementById('eventbox').style.visibility='visible';
+                    document.getElementById('speakbutton').style.visibility='visible';
+                    document.getElementById('speakbox').style.visibility='visible';
+                    document.getElementById('scorebits').style.visibility='visible';
+                    if(document.getElementById("name").value == ""){
+                        tMCow.client.playerSetName(Math.floor(Math.random()*10000));
+                    }else{
+                        tMCow.client.playerSetName(document.getElementById("name").value);
+                    }
+                    // now need to open character creation screen.
+                    return 1;
+                }
+            }
+        </script>
+    </head>
+    <body style="background-color:#ddddff;color:black;" onload="//loadscript();">
+
+    <script language="javascript">
+        $(function() {$( "#dialog-form" ).dialog({
+                autoOpen: true,
+                height: 500,
+                width: 800,
+                modal: true,
+                buttons: {
+                    "Play Now": function() {
+                        if(loadscript() == 1)
+                            $( this ).dialog( "close" );
+                    }
+                },
+                close: function() {
+                }
+            });
+        });
+
+        $(function() {
+                $( "button, input:submit" ).button();
+        });
+
+    </script>
+
+    <canvas style="border:1px solid black;position:absolute;left:200px;top:100px;visibility:hidden;" id="canvy"></canvas>
+    <div id="titlebar" style="position:absolute;top:0px;left:0px;height:100px;width:740px;">
+        
+    </div>
+    <div id="scores">
+
+    </div>
+    <div style="height:100px;width:640px;border:1px solid black;overflow:scroll;
+        position:absolute;left:200px;top:460px;visibility:hidden;" id="eventbox">
+
+    </div>
+
+    <form>
+        <input style="width:528px;position:absolute;left:200px;top:566px;height:26px;visibility:hidden;overflow:scroll;"
+               type="text" id="speakbox"/>
+        <input style="width:100px;position:absolute;padding-top:2px;padding-bottom:2px;
+               left:740px;top:566px;visibility:hidden;" onclick="tMCow.client.playerShout();return false;"
+               type="submit" id="speakbutton" value="Send"/>
+    </form>
+
+    <div style="visibility:hidden;" id="scorebits">
+        <div>
+            <span id="spanSeason"></span> of Year <span id="spanYear"></span>
+        </div>
+
+        <div style="margin-left:900px;position:absolute;">
+            <div style="width:190px;">
+                <h3>Top Legends:</h3>
+                <div id="divTopLegends"></div>
+            </div>
+            <div style="width:190px;">
+                <h3>Active Players:</h3>
+                <div id="divActivePlayers"></div>
+            </div>
+        </div>
+
+        <div>
+            <h3>Stats:</h3>
+            <div style="float:left;width:100px;">Name: </div><div style="float:left;width:100px;" id="divName"></div>
+            <div style="clear:both;"></div>
+            <div style="float:left;width:100px;">Age: </div><div style="float:left;width:100px;" id="divAge"></div>
+            <div style="clear:both;"></div>
+            <div style="float:left;width:100px;">HP: </div><div style="float:left;width:100px;" id="divHP"></div>
+            <div style="clear:both;"></div>
+            <div style="display:none;float:left;width:100px;">Gold: </div><div style="display:none;float:left;width:100px;" id="divGold"></div>
+            <div style="clear:both;"></div>
+            <div style="float:left;width:100px;">EXP: </div><div style="float:left;width:100px;" id="divEXP"></div>
+            <div style="clear:both;"></div>
+            <div style="float:left;width:100px;">Attack: </div><div style="float:left;width:100px;" id="divAttack"></div>
+            <div style="clear:both;"></div>
+            <div style="float:left;width:100px;">Defend: </div><div style="float:left;width:100px;" id="divDefend"></div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+
+
+    <div id="playernamelabels">
+        <div id="myNameLabel" style="position:absolute;left:200px;top:100px;color:#a52a2a;font-weight:bold;">
+            
+        </div>
+    </div>
+
+
+    <div id="dialog-form" title="Hello.">
+        <form>
+        <p>
+            TMORPG is a multiplayer role playing game set in a <b>tiny world</b>.
+        </p>
+        <p>
+            Right, that's the theme done then.
+        </p>
+        <p>
+            Navigate the world with <b>W,A,S,D</b> or the <b>ARROW KEYS</b><br/>
+            Use the <b>SPACE</b> bar to attack monsters.<br/><br/>
+            Joining the game will place you in the village but the real action is in the dungeon below. There is no way to
+            <i>win</i> the game, but who wants to live forever when you can become a <b>legend</b>?
+        </p>
+        <p>Please do give yourself a name or else you'll end up with a random number :(</p>
+
+        <p>
+            Good luck!
+        </p>
+
+            <fieldset>
+                <label for="name">What is your name? (will appear to other players)</label>
+                <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+            </fieldset>
+
+        </form>
+    </div>
+
+
+    </body>
+</html>
+ 

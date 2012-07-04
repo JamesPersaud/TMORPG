@@ -1,0 +1,14 @@
+Make some graphics
+    eyes looking 8 ways
+    HumanHead
+    Human/Elf body (3step animation)
+    Elf head
+    Dwarf Head
+    Dwarf body (3step animation)
+    Skeleton head
+    Skeleton body (3step animation)
+    Slime (3step animation)
+    Kobold head
+    Kobold body
+
+    Eye colour filters?
